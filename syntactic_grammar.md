@@ -14,7 +14,9 @@ operator    -> "==" | "!=" | "<" | "<=" | ">" | ">="
 	    | "+"  | "-"  | "*" | "/" ;
 
 ##### Precedence for parsing expressions
-expression  -> equality
+expression  -> comma ;
+comma	    -> conditional ( "," conditional )\* ;
+conditional -> equality ( "?" equality ":" conditional )? ;
 equality    -> comparison ( ( "!=" | "==" ) comparison )\* ;
 comparison  -> term ( ( ">" | ">=" | "<" | "<=" ) term )\* ;
 term	    -> factor ( ( "-" | "+" ) factor )\* ;
@@ -22,3 +24,9 @@ factor	    -> unary ( ( "/" | "\*" ) unary )\* ;
 unary	    -> ("!" | "-") unary | primary ;
 primary	    -> NUMBER | STRING | "true" | "false" | "nil"
 	     | "(" expression ")" ;
+	     // Error productions... (without conditional)
+	     | ( "," ) comma
+	     | ( "!=" | "==" ) equality
+	     | ( ">" | ">=" | "<" | "<=" ) comparison
+	     | ( "+" ) term
+	     | ( "/" | "*" ) factor ;
