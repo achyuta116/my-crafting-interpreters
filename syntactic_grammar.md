@@ -23,22 +23,30 @@ equality    -> comparison ( ( "!=" | "==" ) comparison )\* ;
 comparison  -> term ( ( ">" | ">=" | "<" | "<=" ) term )\* ;
 term	    -> factor ( ( "-" | "+" ) factor )\* ;
 factor	    -> unary ( ( "/" | "\*" ) unary )\* ;
-unary	    -> ("!" | "-") unary | primary ;
+unary	    -> ("!" | "-") unary | call ;
+call			-> primary ( "(" arguments? ")")\* ;
+arguments	-> expression ( "," expression )\* ;
 primary	    -> NUMBER | STRING | "true" | "false" | "nil" | IDENTIFIER
 	     | "(" expression ")" ;
 
 ##### Statments
 program	    -> declaration\* EOF ;
-declaration -> varDecl
+declaration -> funDecl
+						   | varDecl
                | statement ;
-varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
+funDecl			-> "fun" function ;
+function 		-> IDENTIFIER "(" parameters? ")" block ;
+parameters	-> IDENTIFIER ( "," IDENTIFIER )\* ;
+varDecl     -> "var" IDENTIFIER ( "=" expression )? ";" ;
 statement   -> exprStmt
 	       | forStmt
 	       | ifStmt
 	       | whileStmt
-               | printStmt
+				 | returnStmt
+         | printStmt
 	       | block ;
 block	    -> "{" declaration\* "}"
+returnStmt-> "return" expression? ";" ;
 ifStmt	    -> "if" "(" expression ")" statment
 		( "else" statement )? ;
 whileStmt   -> "while" "(" expression ")" statement ;
