@@ -203,7 +203,7 @@ class Parser {
 				if (!check(RIGHT_PAREN)) {
 						do {
 								if (parameters.size() >= 255) {
-										error(peek(), "Can't have more than 255 parameters.");
+								error(peek(), "Can't have more than 255 parameters.");
 								}
 
 								parameters.add(
@@ -304,14 +304,14 @@ class Parser {
 				if (!check(RIGHT_PAREN)) {
 						do {
 								if (arguments.size() >= 255) {
-										error(peek(), "Can't have more than 255 arguments.");
+								error(peek(), "Can't have more than 255 arguments.");
 								}
 								arguments.add(expression());
 						} while (match(COMMA));
 				}
 
 				Token paren = consume(RIGHT_PAREN, "Expect ')' after arguments.");
-				
+
 				return new Expr.Call(callee, paren, arguments);
 		}
 
@@ -338,9 +338,9 @@ class Parser {
 		}
 
 		private boolean match(TokenType... types) {
-				for (TokenType type : types) {
+		for (TokenType type : types) {
 						if (check(type)) {
-								advance();
+						advance();
 								return true;
 						}
 				}
@@ -396,7 +396,7 @@ class Parser {
 								case PRINT:
 								case RETURN:
 								return;
-}
+						}
 
 						advance();
 				}

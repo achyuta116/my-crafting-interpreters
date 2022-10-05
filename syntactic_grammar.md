@@ -45,6 +45,7 @@ statement   -> exprStmt
 				 | returnStmt
          | printStmt
 	       | block ;
+exprStmt		-> expression ";" ;
 block	    -> "{" declaration\* "}"
 returnStmt-> "return" expression? ";" ;
 ifStmt	    -> "if" "(" expression ")" statment
