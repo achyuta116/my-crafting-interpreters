@@ -27,7 +27,7 @@ unary	    -> ("!" | "-") unary | call ;
 call			-> primary ( "(" arguments? ")" | "." IDENTIFIER)\* ;
 arguments	-> expression ( "," expression )\* ;
 primary	    -> NUMBER | STRING | "true" | "false" | "nil" | IDENTIFIER
-	     | "(" expression ")" ;
+	     | "(" expression ")" | "super" "." IDENTIFIER;
 
 ##### Statments
 program	    -> declaration\* EOF ;
@@ -35,7 +35,7 @@ declaration -> funDecl
 						   | varDecl
 							 | classDecl
                | statement ;
-classDecl		-> "class" IDENTIFIER "{" function\* "}" ;
+classDecl		-> "class" IDENTIFIER ( "<" IDENTIFIER )? "{" function\* "}" ;
 funDecl			-> "fun" function ;
 function 		-> IDENTIFIER "(" parameters? ")" block ;
 parameters	-> IDENTIFIER ( "," IDENTIFIER )\* ;
